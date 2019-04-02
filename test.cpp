@@ -9,8 +9,8 @@ struct playerInfo
 	char playerID;
 };
 
-int PlayerDrop( char board[][10], playerInfo activePlayer );
-void CheckBellow ( char board[][10], playerInfo activePlayer, int dropChoice );
+int PlayerDrop( char board[][10], playerInfo activePlayer ); // ให้ผู้เล่นลงช่องไหน
+void CheckBelow ( char board[][10], playerInfo activePlayer, int dropChoice ); // 
 void DisplayBoard ( char board[][10] );
 int CheckFour ( char board[][10], playerInfo activePlayer );
 int FullBoard( char board[][10] );
@@ -39,7 +39,7 @@ int main()
 	do
 	{
 		dropChoice = PlayerDrop( board, playerOne );
-		CheckBellow( board, playerOne, dropChoice );
+		CheckBelow( board, playerOne, dropChoice );
 		DisplayBoard( board );
 		win = CheckFour( board, playerOne );
 		if ( win == 1 )
@@ -53,7 +53,7 @@ int main()
 		}
 
 		dropChoice = PlayerDrop( board, playerTwo );
-		CheckBellow( board, playerTwo, dropChoice );
+		CheckBelow( board, playerTwo, dropChoice );
 		DisplayBoard( board );
 		win = CheckFour( board, playerTwo );
 		if ( win == 1 )
@@ -99,7 +99,7 @@ int PlayerDrop( char board[][10], playerInfo activePlayer )
 return dropChoice;
 }
 
-void CheckBellow ( char board[][10], playerInfo activePlayer, int dropChoice )
+void CheckBelow ( char board[][10], playerInfo activePlayer, int dropChoice ) //ดูx o
 {
 	int length, turn;
 	length = 6;
@@ -119,7 +119,7 @@ void CheckBellow ( char board[][10], playerInfo activePlayer, int dropChoice )
 
 }
 
-void DisplayBoard ( char board[][10] )
+void DisplayBoard ( char board[][10] )  //สร้างตาราง
 {
 	int rows = 6, columns = 7, i, ix;
 	
@@ -140,7 +140,7 @@ void DisplayBoard ( char board[][10] )
 
 }
 
-int CheckFour ( char board[][10], playerInfo activePlayer )
+int CheckFour ( char board[][10], playerInfo activePlayer )  
 {
 	char XO;
 	int win;
@@ -154,7 +154,7 @@ int CheckFour ( char board[][10], playerInfo activePlayer )
 		for( int ix = 9; ix >= 1; --ix )
 		{
 			
-			if( board[i][ix] == XO     &&
+			if( board[i][ix] == XO     &&   //เฉียงซ้าย
 				board[i-1][ix-1] == XO &&
 				board[i-2][ix-2] == XO &&
 				board[i-3][ix-3] == XO )
@@ -163,7 +163,7 @@ int CheckFour ( char board[][10], playerInfo activePlayer )
 			}
 			
 
-			if( board[i][ix] == XO   &&
+			if( board[i][ix] == XO   &&     //แนวนอน
 				board[i][ix-1] == XO &&
 				board[i][ix-2] == XO &&
 				board[i][ix-3] == XO )
@@ -171,7 +171,7 @@ int CheckFour ( char board[][10], playerInfo activePlayer )
 				win = 1;
 			}
 					
-			if( board[i][ix] == XO   &&
+			if( board[i][ix] == XO   &&     //แนวตั้ง
 				board[i-1][ix] == XO &&
 				board[i-2][ix] == XO &&
 				board[i-3][ix] == XO )
@@ -179,7 +179,7 @@ int CheckFour ( char board[][10], playerInfo activePlayer )
 				win = 1;
 			}
 					
-			if( board[i][ix] == XO     &&
+			if( board[i][ix] == XO     &&    //เฉียงขวา
 				board[i-1][ix+1] == XO &&
 				board[i-2][ix+2] == XO &&
 				board[i-3][ix+3] == XO )
@@ -187,7 +187,7 @@ int CheckFour ( char board[][10], playerInfo activePlayer )
 				win = 1;
 			}
 						
-			if ( board[i][ix] == XO   &&
+			if ( board[i][ix] == XO   &&    //แนวตั้ง
 				 board[i][ix+1] == XO &&
 				 board[i][ix+2] == XO &&
 				 board[i][ix+3] == XO )
@@ -201,7 +201,7 @@ int CheckFour ( char board[][10], playerInfo activePlayer )
 return win;
 }
 
-int FullBoard( char board[][10] )
+int FullBoard( char board[][10] ) //สร้างตาราง
 {
 	int full;
 	full = 0;
@@ -214,12 +214,12 @@ int FullBoard( char board[][10] )
 return full;
 }
 
-void PlayerWin ( playerInfo activePlayer )
+void PlayerWin ( playerInfo activePlayer ) // สรุบผล
 {
 	cout << endl << " Connected Four, "<<activePlayer.playerName<< " Win!" << endl;
 }
 
-int restart ( char board[][10] )
+int restart ( char board[][10] )    //เริ่มไหม่
 {
 	int restart;
 
