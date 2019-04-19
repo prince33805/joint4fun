@@ -9,7 +9,7 @@ struct playerInfo
 	char playerID;
 };
 
-int PlayerDrop( char board[][10], playerInfo activePlayer ); // ให้ผู้เล่นลงช่องไหน
+int PlayerDrop( char board[][10], playerInfo activePlayer ); // ãËé¼ÙéàÅè¹Å§ªèÍ§äË¹
 void CheckBelow ( char board[][10], playerInfo activePlayer, int dropChoice ); // 
 void DisplayBoard ( char board[][10] );
 int CheckFour ( char board[][10], playerInfo activePlayer );
@@ -33,6 +33,12 @@ int main()
 	cout << "Player Two fucking name: ";
 	cin  >> playerTwo.playerName;
 	playerTwo.playerID = 'O';
+	do{
+	    cout<<"Enter row:";
+	    cin>>row;
+	    cout<<"Enter col:";
+	    cin>>col;
+	}while(row <5 || col<5);
 	
 	full = 0,win=0,again=0;
 	DisplayBoard( board);
@@ -85,7 +91,7 @@ int PlayerDrop( char board[][10], playerInfo activePlayer )
 	do
 	{
 		cout << activePlayer.playerName << "'s Turn ";
-		cout << "Please enter a number between 1 and 7: ";
+		cout << "Please enter a number between 1 and"<<col<<": ";
 		cin  >> dropChoice;
 
 		while ( board[1][dropChoice] == 'X' || board[1][dropChoice] == 'O' )
@@ -94,15 +100,15 @@ int PlayerDrop( char board[][10], playerInfo activePlayer )
 			cin  >> dropChoice;
 		}
 
-	}while ( dropChoice < 1 || dropChoice > 7 );
+	}while ( dropChoice < 1 || dropChoice > col );
 
 return dropChoice;
 }
 
-void CheckBelow ( char board[][10], playerInfo activePlayer, int dropChoice ) //ดูx o
+void CheckBelow ( char board[][10], playerInfo activePlayer, int dropChoice ) //´Ùx o
 {
 	int length, turn;
-	length = 6;
+	length = col;
 	turn = 0;
 
 	do 
@@ -119,14 +125,14 @@ void CheckBelow ( char board[][10], playerInfo activePlayer, int dropChoice ) //
 
 }
 
-void DisplayBoard ( char board[][10] )  //สร้างตาราง
+void DisplayBoard ( char board[][10] )  //ÊÃéÒ§µÒÃÒ§
 {
-	int rows = 6, columns = 7, i, ix;
+	int i, ix;
 	
-	for(i = 1; i <= rows; i++)
+	for(i = 1; i <= row; i++)
 	{
 		cout << "|";
-		for(ix = 1; ix <= columns; ix++)
+		for(ix = 1; ix <= col; ix++)
 		{
 			if(board[i][ix] != 'X' && board[i][ix] != 'O')
 				board[i][ix] = '*';
@@ -148,13 +154,13 @@ int CheckFour ( char board[][10], playerInfo activePlayer )
 	XO = activePlayer.playerID;
 	win = 0;
 
-	for( int i = 8; i >= 1; --i )
+	for( int i = row+2; i >= 1; --i )
 	{
 		
-		for( int ix = 9; ix >= 1; --ix )
+		for( int ix = col+2; ix >= 1; --ix )
 		{
 			
-			if( board[i][ix] == XO     &&   //เฉียงซ้าย
+			if( board[i][ix] == XO     &&   //à©ÕÂ§«éÒÂ
 				board[i-1][ix-1] == XO &&
 				board[i-2][ix-2] == XO &&
 				board[i-3][ix-3] == XO )
@@ -163,7 +169,7 @@ int CheckFour ( char board[][10], playerInfo activePlayer )
 			}
 			
 
-			if( board[i][ix] == XO   &&     //แนวนอน
+			if( board[i][ix] == XO   &&     //á¹Ç¹Í¹
 				board[i][ix-1] == XO &&
 				board[i][ix-2] == XO &&
 				board[i][ix-3] == XO )
@@ -171,7 +177,7 @@ int CheckFour ( char board[][10], playerInfo activePlayer )
 				win = 1;
 			}
 					
-			if( board[i][ix] == XO   &&     //แนวตั้ง
+			if( board[i][ix] == XO   &&     //á¹ÇµÑé§
 				board[i-1][ix] == XO &&
 				board[i-2][ix] == XO &&
 				board[i-3][ix] == XO )
@@ -179,7 +185,7 @@ int CheckFour ( char board[][10], playerInfo activePlayer )
 				win = 1;
 			}
 					
-			if( board[i][ix] == XO     &&    //เฉียงขวา
+			if( board[i][ix] == XO     &&    //à©ÕÂ§¢ÇÒ
 				board[i-1][ix+1] == XO &&
 				board[i-2][ix+2] == XO &&
 				board[i-3][ix+3] == XO )
@@ -187,7 +193,7 @@ int CheckFour ( char board[][10], playerInfo activePlayer )
 				win = 1;
 			}
 						
-			if ( board[i][ix] == XO   &&    //แนวตั้ง
+			if ( board[i][ix] == XO   &&    //á¹ÇµÑé§
 				 board[i][ix+1] == XO &&
 				 board[i][ix+2] == XO &&
 				 board[i][ix+3] == XO )
@@ -201,11 +207,11 @@ int CheckFour ( char board[][10], playerInfo activePlayer )
 return win;
 }
 
-int FullBoard( char board[][10] ) //สร้างตาราง
+int FullBoard( char board[][10] ) //àµçÁµÒÃÒ§
 {
 	int full;
 	full = 0;
-	for ( int i = 1; i <= 7; ++i )
+	for ( int i = 1; i <= col; ++i )
 	{
 		if ( board[1][i] != '*' )
 			++full;
@@ -214,12 +220,12 @@ int FullBoard( char board[][10] ) //สร้างตาราง
 return full;
 }
 
-void PlayerWin ( playerInfo activePlayer ) // สรุบผล
+void PlayerWin ( playerInfo activePlayer ) // ÊÃØº¼Å
 {
 	cout << endl << " Connected Four, "<<activePlayer.playerName<< " Win!" << endl;
 }
 
-int restart ( char board[][10] )    //เริ่มไหม่
+int restart ( char board[][10] )    //àÃÔèÁãËÁè
 {
 	int restart;
 
@@ -227,9 +233,9 @@ int restart ( char board[][10] )    //เริ่มไหม่
 	cin  >> restart;
 	if ( restart == 1 )
 	{
-		for(int i = 1; i <= 6; i++)
+		for(int i = 1; i <= row; i++)
 		{
-			for(int j = 1; j <= 7; j++)
+			for(int j = 1; j <= col; j++)
 			{
 				board[i][j] = '*';
 			}
