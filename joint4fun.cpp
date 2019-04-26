@@ -19,8 +19,7 @@ int CheckFour ( char board[][10], playerInfo activePlayer );
 int FullBoard( char board[][10] );
 void PlayerWin ( playerInfo activePlayer );
 int restart ( char board[][10] );
-int GetValue(int t);
-char input[99];
+
 
 int main()
 {
@@ -418,7 +417,11 @@ int restart ( char board[][10] )
 			}
 		}
 	}
-	else
+	else{
 		cout << "Bye!" << endl;
+		exit(1);
+		
+	}
+		
 return restart;
 }
